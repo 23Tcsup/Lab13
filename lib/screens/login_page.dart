@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
-
 class LoginScreen extends StatefulWidget {
-
-
-   
   const LoginScreen({super.key});
 
   @override
@@ -12,18 +8,15 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
-  //Declaración de variables
+  // Declaración de variables
   late Color myColor;
   late Size mediaSize;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  bool rememberUser =  false;
-
+  bool rememberUser = false;
 
   @override
   Widget build(BuildContext context) {
-
     myColor = Theme.of(context).primaryColor;
     mediaSize = MediaQuery.of(context).size;
 
@@ -31,10 +24,13 @@ class _LoginScreenState extends State<LoginScreen> {
       decoration: BoxDecoration(
         color: myColor,
         image: DecorationImage(
-          image: const AssetImage('assets/arizona_fondo.jpg'),
+          image: const AssetImage('assets/aaa.jpg'),
           fit: BoxFit.cover,
-          colorFilter: ColorFilter.mode(myColor.withOpacity(0.2), BlendMode.darken)
+          colorFilter: ColorFilter.mode(
+            myColor.withOpacity(0.2), 
+            BlendMode.darken,
           ),
+        ),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -42,29 +38,30 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             Positioned(
               top: 70,
-              child: _construirTop()
-              ),
+              child: _construirTop(),
+            ),
             Positioned(
               bottom: 0,
-              child: _construirBottom()
-              )
+              child: _construirBottom(),
+            ),
           ],
         ),
       ),
     );
   }
 
-  //Creación de una widget externa
-  //Parte superior
-  Widget _construirTop(){
+  // Creación de una widget externa
+  // Parte superior
+  Widget _construirTop() {
     return SizedBox(
       width: mediaSize.width,
       child: const Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.location_on_sharp,
-          size: 100,
-          color: Colors.white,
+          Icon(
+            Icons.location_on_sharp,
+            size: 100,
+            color: Colors.white,
           ),
           Text(
             'VER MAPA',
@@ -72,44 +69,44 @@ class _LoginScreenState extends State<LoginScreen> {
               color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 40,
-              letterSpacing: 2
+              letterSpacing: 2,
             ),
-            )
+          ),
         ],
       ),
     );
   }
 
-  //Parte inferior
-  Widget _construirBottom(){
+  // Parte inferior
+  Widget _construirBottom() {
     return SizedBox(
       width: mediaSize.width,
       child: Card(
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30),
-            topRight: Radius.circular(30)
-          )
+            topRight: Radius.circular(30),
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(30.0),
           child: _construirFormulario(),
-        ), 
+        ),
       ),
     );
   }
 
-  //Formulario
-  Widget _construirFormulario(){
+  // Formulario
+  Widget _construirFormulario() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
           'Bienvenidos',
           style: TextStyle(
-            color: Colors.amber,
+            color: Color.fromARGB(255, 235, 2, 110),
             fontSize: 32,
-            fontWeight: FontWeight.w500
+            fontWeight: FontWeight.w500,
           ),
         ),
         _construirTextoPlomo('Por favor ingresar tus datos'),
@@ -124,32 +121,32 @@ class _LoginScreenState extends State<LoginScreen> {
         const SizedBox(height: 20),
         _construirBotonLogeo(),
         const SizedBox(height: 20),
-        _construirOtroLogeo()
-      ]
-      );
+        _construirOtroLogeo(),
+      ],
+    );
   }
 
-  //Textos en color plomo para formulario
-  Widget _construirTextoPlomo(String text){
+  // Textos en color plomo para formulario
+  Widget _construirTextoPlomo(String text) {
     return Text(
       text,
       style: const TextStyle(
-        color: Colors.grey,        
+        color: Colors.grey,
       ),
-      );
+    );
   }
 
-  Widget _construirInputField(TextEditingController controller, {isPassWord = false}){
+  Widget _construirInputField(TextEditingController controller, {bool isPassWord = false}) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
-        suffixIcon: isPassWord ? const Icon(Icons.remove_red_eye) : const Icon(Icons.done)
+        suffixIcon: isPassWord ? const Icon(Icons.remove_red_eye) : const Icon(Icons.done),
       ),
       obscureText: isPassWord,
     );
   }
 
-  Widget _construirRememberForgot(){
+  Widget _construirRememberForgot() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -157,45 +154,57 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             Checkbox(
               value: rememberUser,
-              onChanged: (value){
+              onChanged: (value) {
                 setState(() {
                   rememberUser = value!;
                 });
-              }
-              ),
-            _construirTextoPlomo('Recordar contraseña')
+              },
+            ),
+            _construirTextoPlomoPequeno('Recordar contraseña'),
           ],
         ),
         TextButton(
-          onPressed: (){},
-          child: _construirTextoPlomo('Olvide mi contraseña')
-          )
+          onPressed: () {},
+          child: _construirTextoPlomoPequeno('Olvide mi contraseña'),
+        ),
       ],
     );
   }
 
-  Widget _construirBotonLogeo(){
-    return ElevatedButton(
-      onPressed: (){
-        debugPrint("Email: ${emailController.text}");
-        debugPrint("Contraseña: ${passwordController.text}");
-      },
-      style: ElevatedButton.styleFrom(
-        shape: const StadiumBorder(),
-        elevation: 10,
-        shadowColor: Colors.orange,
-        minimumSize: const Size.fromHeight(60)
+  Widget _construirTextoPlomoPequeno(String text) {
+    return Text(
+      text,
+      style: const TextStyle(
+        color: Colors.grey,
+        fontSize: 12, // Tamaño de letra reducido
       ),
-      child: const Text(
-        'REGISTRARSE',
-        style: TextStyle(
-          color: Colors.orange
-        ),
-        )
-      );
+    );
   }
 
-  Widget _construirOtroLogeo(){
+  Widget _construirBotonLogeo() {
+  return ElevatedButton(
+    onPressed: () {
+      debugPrint("Email: ${emailController.text}");
+      debugPrint("Contraseña: ${passwordController.text}");
+    },
+    style: ElevatedButton.styleFrom(
+      backgroundColor: const Color.fromARGB(255, 235, 2, 110), 
+      shape: const StadiumBorder(),
+      elevation: 10,
+      shadowColor: const Color.fromARGB(255, 240, 179, 255),
+      minimumSize: const Size.fromHeight(60),
+    ),
+    child: const Text(
+      'REGISTRARSE',
+      style: TextStyle(
+        color: Colors.white, // Texto blanco
+      ),
+    ),
+  );
+}
+
+
+  Widget _construirOtroLogeo() {
     return Center(
       child: Column(
         children: [
@@ -205,21 +214,18 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Tab(
-                icon: Image.asset('assets/github.png'),                
+                icon: Image.asset('assets/github.png'),
               ),
               Tab(
                 icon: Image.asset('assets/instagram.png'),
               ),
               Tab(
                 icon: Image.asset('assets/logotipo-cuadrado-de-vimeo.png'),
-              )
+              ),
             ],
-          )
+          ),
         ],
       ),
     );
   }
-
-
-
 }
